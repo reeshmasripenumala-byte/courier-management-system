@@ -1,0 +1,197 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-dark text-white">
+            <h3 class="text-center">🚚 Admin Dashboard</h3>
+        </div>
+
+        <div class="card-body">
+
+            <!-- Search Shipment -->
+            <form action="{{ url_for('admin') }}" method="GET" class="mb-4">
+
+                <div class="input-group">
+
+                    <input
+                        type="text"
+                        name="search"
+                        class="form-control"
+                        placeholder="Search by Tracking ID"
+                        value="{{ request.args.get('search','') }}">
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary">
+
+                        🔍 Search
+
+                    </button>
+
+                    <a href="{{ url_for('admin') }}"
+                       class="btn btn-secondary">
+
+                        Show All
+
+                    </a>
+
+                </div>
+
+            </form>
+
+            <table class="table table-bordered table-hover">
+
+                <thead class="table-primary">
+
+                    <tr>
+
+                        <th>ID</th>
+                        <th>Tracking ID</th>
+                        <th>Sender</th>
+                        <th>Receiver</th>
+                        <th>Status</th>
+<th>Booking Date</th>
+<th>Expected Delivery</th>
+<th>Update Status</th>
+<th>Delete</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% if shipments %}
+
+                    {% for shipment in shipments %}
+
+                    <tr>
+
+                        <td>{{ shipment.id }}</td>
+
+                        <td>
+                            <strong>{{ shipment.tracking_id }}</strong>
+                        </td>
+
+                        <td>{{ shipment.sender_name }}</td>
+
+                        <td>{{ shipment.receiver_name }}</td>
+
+                        <td>
+
+                            {% if shipment.status == "Delivered" %}
+                                <span class="badge bg-success">{{ shipment.status }}</span>
+
+                            {% elif shipment.status == "In Transit" %}
+                                <span class="badge bg-warning text-dark">{{ shipment.status }}</span>
+
+                            {% elif shipment.status == "Out for Delivery" %}
+                                <span class="badge bg-info text-dark">{{ shipment.status }}</span>
+
+                            {% else %}
+                                <span class="badge bg-secondary">{{ shipment.status }}</span>
+
+                            {% endif %}
+                            <td>{{ shipment.booking_date }}</td>
+
+<td>{{ shipment.delivery_date }}</td>
+
+
+                        </td>
+
+                        <td>
+
+                            <form action="{{ url_for('update_status', id=shipment.id) }}" method="POST">
+
+                                <div class="input-group">
+
+                                    <select
+                                        name="status"
+                                        class="form-select">
+
+                                        <option value="Booked"
+                                        {% if shipment.status=="Booked" %}selected{% endif %}>
+                                            Booked
+                                        </option>
+
+                                        <option value="Picked Up"
+                                        {% if shipment.status=="Picked Up" %}selected{% endif %}>
+                                            Picked Up
+                                        </option>
+
+                                        <option value="In Transit"
+                                        {% if shipment.status=="In Transit" %}selected{% endif %}>
+                                            In Transit
+                                        </option>
+
+                                        <option value="Out for Delivery"
+                                        {% if shipment.status=="Out for Delivery" %}selected{% endif %}>
+                                            Out for Delivery
+                                        </option>
+
+                                        <option value="Delivered"
+                                        {% if shipment.status=="Delivered" %}selected{% endif %}>
+                                            Delivered
+                                        </option>
+
+                                    </select>
+
+                                    <button
+                                        type="submit"
+                                        class="btn btn-primary">
+
+                                        Update
+
+                                    </button>
+
+                                </div>
+
+                            </form>
+
+                        </td>
+
+                        <td>
+
+                            <a href="{{ url_for('delete_shipment', id=shipment.id) }}"
+                               class="btn btn-danger btn-sm"
+                               onclick="return confirm('Are you sure you want to delete this shipment?');">
+
+                                🗑 Delete
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <tr>
+
+                        <td colspan="7" class="text-center text-danger">
+
+                            No shipment found.
+
+                        </td>
+
+                    </tr>
+
+                {% endif %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,31 @@
+ 
+            <td>
+
+<form action="{{ url_for('update_status', id=shipment.id) }}" method="POST">
+
+    <select name="status" class="form-select form-select-sm">
+
+        <option value="Booked"
+        {% if shipment.status=="Booked" %}selected{% endif %}>
+            Booked
+        </option>
+
+        <option value="In Transit"
+        {% if shipment.status=="In Transit" %}selected{% endif %}>
+            In Transit
+        </option>
+
+        <option value="Delivered"
+        {% if shipment.status=="Delivered" %}selected{% endif %}>
+            Delivered
+        </option>
+
+    </select>
+
+    <button type="submit" class="btn btn-primary btn-sm mt-2">
+        Update
+    </button>
+
+</form>
+
+</td>

@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-6">
+
+            <div class="card shadow">
+
+                <div class="card-header bg-primary text-white text-center">
+                    <h3>📦 Track Shipment</h3>
+                </div>
+
+                <div class="card-body">
+
+                    <form action="{{ url_for('track') }}" method="POST">
+
+                        <div class="mb-3">
+                            <label class="form-label">Tracking ID</label>
+
+                            <input
+                                type="text"
+                                name="tracking_id"
+                                class="form-control"
+                                placeholder="Enter Tracking ID"
+                                required>
+                        </div>
+
+                        <button type="submit" class="btn btn-success w-100">
+                            Track Shipment
+                        </button>
+
+                    </form>
+
+                    <br>
+
+                    {% if shipment %}
+
+                    <div class="alert alert-success">
+
+                        <h5>Shipment Details</h5>
+
+                        <p><b>Tracking ID:</b> {{ shipment.tracking_id }}</p>
+                        <p><b>Sender:</b> {{ shipment.sender_name }}</p>
+                        <p><b>Receiver:</b> {{ shipment.receiver_name }}</p>
+                        <p><b>Source:</b> {{ shipment.source }}</p>
+                        <p><b>Destination:</b> {{ shipment.destination }}</p>
+                        <p><b>Weight:</b> {{ shipment.weight }} kg</p>
+                        <p><b>Status:</b> {{ shipment.status }}</p>
+
+                    </div>
+
+                    {% endif %}
+
+                    {% if error %}
+
+                    <div class="alert alert-danger">
+                        {{ error }}
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

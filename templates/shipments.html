@@ -1,0 +1,75 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+            <h3 class="text-center">📦 My Shipments</h3>
+        </div>
+
+        <div class="card-body">
+
+            {% if shipments %}
+
+            <table class="table table-bordered table-hover">
+
+                <thead class="table-dark">
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Tracking ID</th>
+                        <th>Sender</th>
+                        <th>Receiver</th>
+                        <th>Source</th>
+                        <th>Destination</th>
+                        <th>Weight</th>
+                        <th>Status</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for shipment in shipments %}
+
+                    <tr>
+
+                        <td>{{ shipment.id }}</td>
+                        <td>{{ shipment.tracking_id }}</td>
+                        <td>{{ shipment.sender_name }}</td>
+                        <td>{{ shipment.receiver_name }}</td>
+                        <td>{{ shipment.source }}</td>
+                        <td>{{ shipment.destination }}</td>
+                        <td>{{ shipment.weight }} kg</td>
+                        <td>
+                            <span class="badge bg-success">
+                                {{ shipment.status }}
+                            </span>
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+            {% else %}
+
+            <div class="alert alert-warning text-center">
+                No shipments found.
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

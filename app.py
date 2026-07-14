@@ -213,11 +213,10 @@ def logout():
 
 
 # ---------------- Create Database ----------------
+# ---------------- Create Database ----------------
 with app.app_context():
+    db.drop_all()      # TEMPORARY - remove after first successful deploy
     db.create_all()
-
-
-
 # ---------------- Run Application ----------------
 if __name__ == "__main__":
     app.run(debug=True)

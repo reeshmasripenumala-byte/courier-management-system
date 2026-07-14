@@ -1,31 +1,18 @@
- 
-            <td>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
 
-<form action="{{ url_for('update_status', id=shipment.id) }}" method="POST">
+<h2>Courier Dashboard</h2>
 
-    <select name="status" class="form-select form-select-sm">
+<p>Welcome!</p>
 
-        <option value="Booked"
-        {% if shipment.status=="Booked" %}selected{% endif %}>
-            Booked
-        </option>
+<a href="{{ url_for('book') }}">Book Shipment</a><br><br>
+<a href="{{ url_for('track') }}">Track Shipment</a><br><br>
+<a href="{{ url_for('shipments') }}">My Shipments</a><br><br>
+<a href="{{ url_for('logout') }}">Logout</a>
 
-        <option value="In Transit"
-        {% if shipment.status=="In Transit" %}selected{% endif %}>
-            In Transit
-        </option>
-
-        <option value="Delivered"
-        {% if shipment.status=="Delivered" %}selected{% endif %}>
-            Delivered
-        </option>
-
-    </select>
-
-    <button type="submit" class="btn btn-primary btn-sm mt-2">
-        Update
-    </button>
-
-</form>
-
-</td>
+</body>
+</html>

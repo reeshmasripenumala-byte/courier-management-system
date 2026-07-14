@@ -80,7 +80,13 @@ def login():
 # ---------------- User Dashboard ----------------
 @app.route("/dashboard")
 def dashboard():
-    return render_template("dashboard.html")
+    try:
+        return render_template("dashboard.html")
+    except Exception as e:
+        print("=" * 60)
+        traceback.print_exc()
+        print("=" * 60)
+        return str(e), 500
 
 
 # ---------------- Book Shipment ----------------
